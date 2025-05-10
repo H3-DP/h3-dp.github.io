@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">
+.anticon {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anticon > * {
+  line-height: 1;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.anticon::before {
+  display: none;
+}
+
+.anticon .anticon-icon {
+  display: block;
+}
+
+.anticon[tabindex] {
+  cursor: pointer;
+}
+
+.anticon-spin::before,
+.anticon-spin {
+  display: inline-block;
+  -webkit-animation: loadingCircle 1s infinite linear;
+  animation: loadingCircle 1s infinite linear;
+}
+
+@-webkit-keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  p, .subtitle, .content {
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      overflow-wrap: break-word;
+  }
+}
+</style>
+  
+  <meta name="description" content="H3DP: Triply-Hierarchical Diffusion Policy for Visuomotor Learning">
+  <meta name="keywords" content="Imitation Learning, Representation Learning, Diffusion Model">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    H³DP | Triply-Hierarchical Diffusion Policy for Visuomotor Learning
+  </title>
+
+  <!-- <meta property="og:image" content="./H3DP_files/thu_logo.png"> -->
+
+  <!-- Favicon -->
+  <link rel="icon" href="./H3DP_files/thu_logo.png" type="image/jpeg">
+
+  <!-- Google tag (gtag.js) -->
+  <script async="" src="./H3DP_files/js"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-QZ38WT2YPD');
+  </script>
+
+  <!-- <link href="./H3DP_files/css" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./H3DP_files/bulma.min.css">
+  <link rel="stylesheet" href="./H3DP_files/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./H3DP_files/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./H3DP_files/index.css">
+
+  <style>
+    .subtitle.is-1.publication-title {
+      line-height: 1.2 !important;
+      max-height: none !important;
+    }
+    
+    h1.subtitle.is-1.publication-title {
+      line-height: 1.2 !important;
+      max-height: none !important;
+    }
+    
+    p, .subtitle, .content {
+      line-height: 1.4 !important;
+    }
+    
+    .subtitle strong {
+      line-height: 1.7 !important;
+    }
+    
+    @media screen and (min-width: 769px) {
+      .subtitle.is-1.publication-title {
+        line-height: 1.2 !important;
+      }
+    }
+  </style>
+
+  <script src="https://kit.fontawesome.com/19914a84eb.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./H3DP_files/bulma-carousel.min.js"></script>
+  <script src="./H3DP_files/bulma-slider.min.js"></script>
+  <script src="./H3DP_files/index.js"></script>
+</head>
+
+<body><section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
+
+  <div class="hero-video" style="height: 100%; width: 177.77777778vh; min-width: 100%;min-height: 56.25vw;">
+    <video playsinline="" autoplay="" muted="" loop="">
+      <source src="./videos/teaser-final.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="hero-video is-hidden-tablet is-inline-block-mobile"
+  style="height: 224.722222222vw; width: 100%; min-width: 44.49vh; min-height: 100%;">
+    <video playsinline="" autoplay="" muted="" loop="">
+      <source src="./videos/teaser-mobile.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="overlay"></div>
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head is-hidden-mobile">
+    <header class="navbar">
+      <div class="container is-size-5">
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <!-- class="navbar-item  pl-4 pr-4" -->
+            <!-- class="button is-inverted is-large" -->
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title is-1 publication-title is-size-1-mobile" style="font-size: 12rem; line-height: 1.1;">
+        <em>H<sup>3</sup>DP</em>
+      </h1>
+      <h1 class="subtitle is-1 publication-title is-size-4-mobile" style="font-size: 4rem; line-height: 1.2 !important; max-height: none !important;">
+        Triply-Hierarchical Diffusion Policy for Visuomotor Learning
+      </h1>
+    </div>
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot is-hidden-mobile">
+    <nav class="tabs is-boxed is-fullwidth is-size-5">
+      <ul>
+        <li><a href="https://h3-dp.github.io/#overview"><strong>Overview</strong></a></li>
+        <li><a href="https://h3-dp.github.io/#abstract"><strong>Abstract</strong></a></li>
+        <li><a href="https://h3-dp.github.io/#method"><strong>Method</strong></a></li>
+        <li><a href="https://h3-dp.github.io/#real"><strong>Real World Experiments</strong></a></li>
+        <li><a href="https://h3-dp.github.io/#sim"><strong>Simulation Experiments</strong></a></li>
+        <li><a href="https://h3-dp.github.io/#origin"><strong>Raw Videos</strong></a></li>
+      </ul>
+    </nav>
+  </div>
+
+</section>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <!-- Title. -->
+            <h1 class="title is-1 publication-title is-size-1-mobile" style="font-size: 5rem; line-height: 1.1; font-style: italic;">H<sup>3</sup>DP</h1>
+          <h2 class="title is-2 publication-title">Triply-Hierarchical Diffusion Policy for<br>Visuomotor Learning</h2>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-small" id="overview">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-3 has-text-centered is-size-3-mobile title-with-lines" style="color: rgb(0, 100, 200);">Overview</h2>
+
+          <div class="column is-centered">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/demo.mp4" type="video/mp4">
+              </video>
+              <!-- <p class="has-text-centered mt-2" style="font-weight: bold;">Demo Video</p> -->
+            </div>
+          </div>
+          <div class="content has-text-justified">
+            <p style="font-size: 1.1rem; line-height: 1.5;">
+          <!-- <h2 class="subtitle " style="line-height: 1.5;"> -->
+          <strong style="color: rgb(0, 100, 200); font-size: 1.5em;">H<sup>3</sup>DP</strong> is a novel visuomotor learning framework that explicitly incorporates hierarchical structures to strengthen the integration between visual features and action generation. H<sup>3</sup>DP can not only achieve superior performance across 44 tasks on 5 simulation benchmarks, but also handle long-horizon challenging manipulation tasks in cluttered real-world scenarios.
+          <!-- Incorporating a <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">triply-hierarchical</strong> design in representation learning, H<sup>3</sup>DP models the relationship between action generation and visual feature extraction, which is usually neglected in prior works.  -->
+        <!-- </h2> -->
+            </p>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-small" id="abstract">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-3 has-text-centered is-size-3-mobile title-with-lines" style="color: rgb(0, 100, 200);">Abstract</h2>
+        <div class="columns is-centered">
+            <figure class="image">
+              <img src="./H3DP_files/teaser.jpg" alt="H3DP">
+            </figure>
+        </div>
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            Visuomotor policy learning has witnessed substantial progress in robotic manipulation, with recent approaches predominantly relying on generative models to model the action distribution. However, these methods often overlook the critical coupling between visual perception and action prediction. In this work, we introduce <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">Triply-Hierarchical Diffusion Policy (H<sup>3</sup>DP)</strong>, a novel visuomotor learning framework that explicitly incorporates hierarchical structures to strengthen the integration between visual features and action generation. H<sup>3</sup>DP contains <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">3</strong> levels of hierarchy: (1) depth-aware input layering that organizes RGB-D observations based on depth information; (2) multi-scale visual representations that encode semantic features at varying levels of granularity; and (3) a hierarchically conditioned diffusion process that aligns the generation of coarse-to-fine actions with corresponding visual features. Extensive experiments demonstrate that H<sup>3</sup>DP yields a <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">+27.5%</strong> average relative improvement over baselines across <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">44</strong> simulation tasks and achieves superior performance in <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">4</strong> challenging bimanual real-world manipulation tasks.
+          </p>
+        </div>
+
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section is-small" id="method">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-3 has-text-centered is-size-3-mobile title-with-lines" style="color: rgb(0, 100, 200);">Method</h2>
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            H<sup>3</sup>DP employs three hierarchical structures to enhance the policy's understanding of visual input and predict more accurate action distributions:<br>
+            (1) <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">Depth-aware Layering</strong> discretizes the RGB-D image intro multiple layers to improve the policy's ability to distinguish and interpret foreground-background variations<br>
+            (2) <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">Multi-Scale Visual Representations</strong>, wherein coarse-grained features capture global contextual information, while fine-grained features encode detailed scene attributes;<br>
+            (3) <strong style="color: rgb(0, 100, 200); font-size: 1.05em;"> Hierarchical Action Generation</strong> utilizes representations at different scales to generate actions in a coarse-to-fine manner, strengthening the correlation between action and visual representations.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <figure class="image">
+              <img src="./videos/method.gif" alt="H3DP">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section is-small" id="real">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-3 has-text-centered is-size-3-mobile title-with-lines" style="color: rgb(0, 100, 200);">Real World Experiments</h2>
+        <br>
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            In terms of real-world experiments, we choose Galaxea R1 robot as our platform. We design four diverse challenging real-world tasks to evaluate the effectiveness of our method.
+          </p>
+        </div>
+        
+        <!-- <h3 class="title is-3 has-text-centered is-size-3-mobile" style="color: rgb(0, 130, 220);">Four Tasks</h3> -->
+
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/fridge-1-final.mp4" type="video/mp4">
+              </video>
+              <p class="has-text-centered mt-2" style="font-weight: bold;">Clean Fridge (CF)</p>
+            </div>
+          </div>
+          
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/bottle-1-final-final.mp4" type="video/mp4">
+              </video>
+              <p class="has-text-centered mt-2" style="font-weight: bold;">Place Bottle (PB)</p>
+            </div>
+          </div>
+          
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sweep-2-mask-final.mp4" type="video/mp4">
+              </video>
+              <p class="has-text-centered mt-2" style="font-weight: bold;">Sweep Trash (ST)</p>
+            </div>
+          </div>
+          
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/juice-1-final.mp4" type="video/mp4">
+              </video>
+              <p class="has-text-centered mt-2" style="font-weight: bold;">Pour Juice (PJ)</p>
+            </div>
+          </div>
+
+          <div class="content has-text-justified">
+          
+            <p style="font-size: 1.1rem; line-height: 1.5;">
+              The first two are short-horizon tasks (about 30s each task), while the last two are long-horizon (about 1min - 1.5min each task). <strong>The previous demo videos are at original (1x) speed without clipping or cherry-picking.</strong>
+              <br><br>
+              H<sup>3</sup>DP could handle the four tasks with higher success rates compared to baselines. 
+  
+              <div class="columns is-centered">
+                <figure class="image">
+                  <img src="./H3DP_files/realworld.jpg" alt="realworld">
+                </figure>
+              </div>
+            </p>
+          </div>
+
+        <h2 class="title is-3 has-text-centered is-size-3-mobile title-with-lines" style="color: rgb(0, 100, 200);">Generalization</h2>
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            <strong style="color: rgb(0, 100, 200); font-size: 1.2em;">Failure Recovery.</strong> H<sup>3</sup>DP could recover from failure cases by leveraging the hierarchical structure of the diffusion process. For example, in the Sweep Trash (ST) task, robot could recover from failure and succeed in the next attempt.
+          </p>
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            We deliberately move the debris before robot starts to sweep to test the ability of H<sup>3</sup>DP to recover from failure cases. The following demo videos are clipped directly from our long-take demos without modification or acceleration (1x speed). 
+          </p>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/Failure-recovery-0-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/disturb-1-final(1).mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/disturbance-2-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            <strong style="color: rgb(0, 100, 200); font-size: 1.2em;">Disturbance Resistance.</strong> H<sup>3</sup>DP could resist disturbances during the execution of the task. For example, in the Sweep Trash (ST) task, we randomly put debris during the process of sweeping to disturb, H<sup>3</sup>DP somehow could manage to finish the task. The following demo videos are clipped directly from our long-take demos without modification or acceleration (1x speed).
+          </p>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/disturbance-4-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/disturbance-5-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/disturbance-3-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            <strong style="color: rgb(0, 100, 200); font-size: 1.2em;">Spatial Generalization.</strong> H<sup>3</sup>DP shows ability in spatial generalization. For example, in the Place Bottle (PB) and Clean Fridge (CF) task, we put the bottle or coaster in different positions to test the spatial generalization ability of H<sup>3</sup>DP. The following demo videos are clipped directly from our long-take demos without modification or acceleration (1x speed).
+          </p>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/spatial-gen-1-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/spatial-gen-2-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/spatial-gen-3-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/spatial-gen-4-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/spatial-gen-5-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/spatial-gen-6-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            <strong style="color: rgb(0, 100, 200); font-size: 1.2em;">Instance Generalization.</strong> H<sup>3</sup>DP could deal with different objects. For example, in the Place Bottle (PB) task, we put different bottles and coasters to test the instance generalization ability. The following demo videos are clipped directly from our long-take demos without modification or acceleration (1x speed).
+          </p>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/object-gen-1-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/object-gen-2-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/object-gen-3-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/object-gen-5-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/object-gen-4-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column is-th">
+          <div class="video-container">
+            <video autoplay="" muted="" loop="" playsinline="" height="100%">
+              <source src="./videos/object-gen-6-final.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section is-small" id="sim">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-3 has-text-centered is-size-3-mobile title-with-lines" style="color: rgb(0, 100, 200);">Simulation Experiments</h2>
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            To sufficiently verify the effectiveness of H<sup>3</sup>DP, we evaluate H<sup>3</sup>DP on <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">5</strong> simulation benchmarks, with a total of <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">44</strong> tasks. The results are shown in the table, with some task examples displayed.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+            <figure class="image">
+              <img src="./H3DP_files/sim-results.jpg" alt="H3DP">
+            </figure>
+        </div>
+        
+        <div class="columns is-multiline" style="display: flex; flex-wrap: wrap;">
+          
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/5.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/7.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/1.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/13.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/12.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/3.mov" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/6.mov" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-one-third-mobile is-one-third-tablet is-one-third-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sim/8.mov" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="has-text-centered" style="margin: 2rem 0;">
+          <button id="show-more-sims" class="button is-link is-medium" data-initialized="true" data-inline-initialized="true">
+            <span><strong>Hide Simulation Results</strong></span>
+            <span class="icon">
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+
+        <div id="additional-sims" class="columns is-multiline" style="display: flex; flex-wrap: wrap;">
+          
+          <div class="content has-text-justified">
+            <p style="font-size: 1.1rem; line-height: 1.5;">
+              <strong style="color: rgb(0, 100, 200); font-size: 1.2em;">Entire Success Rates.</strong> We present the simulation results for each task in the following.  For each experiment, we report the average success rate over <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">3</strong> different random seeds. The final average result is obtained by averaging across all benchmarks.
+            </p>
+          </div>
+
+          <div class="columns is-centered">
+            <figure class="image">
+              <img src="./H3DP_files/sim-total.png" alt="H3DP">
+            </figure>
+          </div>
+
+          <div class="content has-text-justified">
+            <p style="font-size: 1.1rem; line-height: 1.5;">
+              <strong style="color: rgb(0, 100, 200); font-size: 1.2em;">Training Curve.</strong> We also provide the training progress of 4 algorithms on <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">12 various tasks</strong> across 3 different benchmarks. The selected tasks span a range of difficulties and are included <strong style="color: rgb(0, 100, 200); font-size: 1.05em;">without cherry picking</strong> to provide an unbiased view of each algorithm. 
+            </p>
+          </div>
+          
+          <div class="columns is-centered">
+            <figure class="image">
+              <img src="./H3DP_files/train_curve.jpg" alt="H3DP">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-small" id="origin">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-3 has-text-centered is-size-3-mobile title-with-lines" style="color: rgb(0, 100, 200);">Raw Videos</h2>
+
+        <div class="content has-text-justified">
+          <p style="font-size: 1.1rem; line-height: 1.5;">
+            <strong style="color: rgb(0, 100, 200); font-size: 1.2em;">Original videos.</strong> We provide the original videos of the four tasks. Given the raw videos are too long, we apply different acceleration.
+          </p>
+        </div>
+
+
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/bottle-0-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/bottle-2-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/fridge-demo-1-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/fridge-demo-2-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sweep-demo-2-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sweep-demo-5-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/juice-demo-1-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/juice-demo-2-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        
+        <div class="has-text-centered" style="margin: 2rem 0;">
+          <button id="show-more-demos" class="button is-link is-medium" data-initialized="true" data-inline-initialized="true">
+            <span><strong>Hide Demos</strong></span>
+            <span class="icon">
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+
+        <div id="additional-demos" class="columns is-multiline" style="display: flex; flex-wrap: wrap;">
+
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/bottle-3-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/bottle-4-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/bottle-5-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/bottle-6-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/fridge-demo-3-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/fridge-demo-4-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sweep-demo-1-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/sweep-demo-3-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+              <source src="./videos/sweep-demo-4-final-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/juice-demo-3-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/juice-demo-4-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+            <div class="video-container has-text-centered">
+              <video autoplay="" muted="" loop="" playsinline="" height="100%" style="width: 100%;">
+                <source src="./videos/juice-demo-5-final.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<footer class="footer">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website template modified from <a href="https://yangsizhe.github.io/robosplat/">RoboSplat</a> and <a href="https://umi-on-legs.github.io/">UMI on Legs</a>.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      const showMoreButton = document.getElementById('show-more-sims');
+      const additionalDemos = document.getElementById('additional-sims');
+      
+      if (showMoreButton && additionalDemos) {
+        console.log('Inline script: initializing button');
+        
+        additionalDemos.style.display = 'none';
+        
+        if (!showMoreButton.hasAttribute('data-inline-initialized')) {
+          showMoreButton.setAttribute('data-inline-initialized', 'true');
+          
+          showMoreButton.addEventListener('click', function() {
+            console.log('Inline script: button clicked');
+            const computedStyle = window.getComputedStyle(additionalDemos);
+            const isHidden = computedStyle.display === 'none';
+            
+            additionalDemos.style.display = isHidden ? 'flex' : 'none';
+            
+            const buttonText = showMoreButton.querySelector('span:first-child');
+            const buttonIcon = showMoreButton.querySelector('.fas');
+            
+            if (buttonText && buttonIcon) {
+              if (isHidden) {
+                buttonText.innerHTML = '<strong>Hide Simulation Results</strong>';
+                buttonIcon.classList.remove('fa-chevron-down');
+                buttonIcon.classList.add('fa-chevron-up');
+              } else {
+                buttonText.innerHTML = '<strong>Entire Simulation Results</strong>';
+                buttonIcon.classList.remove('fa-chevron-up');
+                buttonIcon.classList.add('fa-chevron-down');
+              }
+            }
+          });
+        }
+      } else {
+        console.error('Inline script: Button or additional demos section not found');
+      }
+    }, 1000);
+  });
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      const showMoreButton = document.getElementById('show-more-demos');
+      const additionalDemos = document.getElementById('additional-demos');
+      
+      if (showMoreButton && additionalDemos) {
+        console.log('Inline script: initializing button');
+        
+        additionalDemos.style.display = 'none';
+        
+        if (!showMoreButton.hasAttribute('data-inline-initialized')) {
+          showMoreButton.setAttribute('data-inline-initialized', 'true');
+          
+          showMoreButton.addEventListener('click', function() {
+            console.log('Inline script: button clicked');
+            const computedStyle = window.getComputedStyle(additionalDemos);
+            const isHidden = computedStyle.display === 'none';
+            
+            additionalDemos.style.display = isHidden ? 'flex' : 'none';
+            
+            const buttonText = showMoreButton.querySelector('span:first-child');
+            const buttonIcon = showMoreButton.querySelector('.fas');
+            
+            if (buttonText && buttonIcon) {
+              if (isHidden) {
+                buttonText.innerHTML = '<strong>Hide Demos</strong>';
+                buttonIcon.classList.remove('fa-chevron-down');
+                buttonIcon.classList.add('fa-chevron-up');
+              } else {
+                buttonText.innerHTML = '<strong>Show More Demos</strong>';
+                buttonIcon.classList.remove('fa-chevron-up');
+                buttonIcon.classList.add('fa-chevron-down');
+              }
+            }
+          });
+        }
+      } else {
+        console.error('Inline script: Button or additional demos section not found');
+      }
+    }, 1000);
+  });
+</script>
+
+</body></html>
